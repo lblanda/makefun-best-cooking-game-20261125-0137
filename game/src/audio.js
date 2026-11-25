@@ -34,6 +34,8 @@ function tone(freq, duration, type, gainValue, when = 0, slideTo = null) {
   if (muted) return;
   const ctx = audioContext();
   if (!ctx) return;
+  // Keep every blip well below clipping, however loud a caller asks for it.
+  const safeGain = Math.max(0.0001, Math.min(gainValue, 0.25));
   const start = ctx.currentTime + when;
   const osc = ctx.createOscillator();
   const gain = ctx.createGain();
@@ -41,7 +43,7 @@ function tone(freq, duration, type, gainValue, when = 0, slideTo = null) {
   osc.frequency.setValueAtTime(freq, start);
   if (slideTo !== null) osc.frequency.exponentialRampToValueAtTime(slideTo, start + duration);
   gain.gain.setValueAtTime(0.0001, start);
-  gain.gain.exponentialRampToValueAtTime(gainValue, start + 0.012);
+  gain.gain.exponentialRampToValueAtTime(safeGain, start + 0.012);
   gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
   osc.connect(gain);
   gain.connect(ctx.destination);

@@ -96,7 +96,9 @@ export function removeOrder(board, orderId) {
   if (index !== -1) board.orders.splice(index, 1);
 }
 
-/** Coins for serving: the recipe price plus a tip that shrinks as the ticket ages. */
+/** Coins for serving: the recipe price plus a tip that shrinks as the ticket ages.
+ *  A ticket served with its whole time left pays price + TIP_MAX; one served on its
+ *  last second pays the price alone. */
 export function serveValue(order) {
   const fraction = Math.max(0, order.timeLeft / order.timeLimit);
   return order.price + Math.round(TIP_MAX * fraction);

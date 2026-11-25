@@ -24,6 +24,8 @@ export const STATIONS = {
   chopper: { x: 336, y: 300, w: 210, h: 150, slots: 1 },
   assembly: { x: 920, y: 300, w: 312, h: 150, plates: 2 },
   bin: { x: 48, y: 560, w: 130, h: 120 },
+  // The service hatch is scenery, not a station: dishes are served from the assembly
+  // counter itself, and the hatch only shows the count. It still blocks the chef.
   serve: { x: 920, y: 560, w: 312, h: 120 },
 };
 

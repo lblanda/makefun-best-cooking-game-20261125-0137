@@ -30,7 +30,12 @@ const server = createServer(async (req, res) => {
       return;
     }
     const data = await readFile(file);
-    res.writeHead(200, { 'content-type': TYPES[extname(file)] ?? 'application/octet-stream' });
+    // Never cache during play-testing: a stale module is the classic "why did my
+    // edit not show up" trap, and the game itself makes no network request at all.
+    res.writeHead(200, {
+      'content-type': TYPES[extname(file)] ?? 'application/octet-stream',
+      'cache-control': 'no-store',
+    });
     res.end(data);
   } catch {
     res.writeHead(404);

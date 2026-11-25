@@ -1,5 +1,6 @@
 // A tiny seeded random generator (mulberry32) so a ?seed=N game always deals the same
 // orders and a screenshot staged from that seed always shows the same frame.
+// next() returns a float in [0, 1); int(max) returns an integer in [0, max).
 export function createRandom(seed) {
   let state = seed >>> 0;
   return {

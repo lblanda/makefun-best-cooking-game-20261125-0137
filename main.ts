@@ -32,7 +32,9 @@ if (existsSync(join(here, 'screenshots'))) cpSync(join(here, 'screenshots'), joi
 // others refuse an entry the scorer would refuse (more than 4 screenshots or one over
 // 256 KiB; more than 993 files in game/ or 48 MiB of game files, in all, or a path under
 // game/ over 1000 bytes: game/ counts beside /output's own 1000-entry cap, its
-// screenshots/ and dossier.json).
+// screenshots/ and dossier.json). buildDossier's bytes are written exactly as returned:
+// do not append a newline or reformat dossier.json afterwards, or the dossier no longer
+// matches what buildDossier writes.
 writeFileSync(
   join(out, 'dossier.json'),
   buildDossier(out, {
